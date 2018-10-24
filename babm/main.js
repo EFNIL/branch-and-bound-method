@@ -13,21 +13,25 @@ var counter = function() {
 	}
 }();
 //
-function CoutBranch(indexCT, arrayPY) {
-	var rightBranch = index;
-	var leftBranch = 0.0;
-	//
+function CoutBranch(indexCT, rightP, leftP) {
+	var rightBranch = indexCT * rightP;
+	var leftBranch = indexCT * leftP;
 	return rightBranch + leftBranch;
 }
 //
 function TestCout() {
 	for(var i = 0; i < tAllList.length; i++) {
-		for(var k = 0; k < tAllList[i][k].length; k++) {
+		var rP = 0.0;
+		var lP = 0.0;
+		//
+		for(var k = 0; k < tAllList[i].length; k++) {
 			if(tAllList[i][k] == 0) {
-
+				lP += pList[k];
 			} else if(tAllList[i][k] == 1) {
-				
+				rP += pList[k];
 			}
 		}
+		//
+		console.log(CoutBranch(costList[i], lP, rP));
 	}
-}
+} TestCout();
