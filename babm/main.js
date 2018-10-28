@@ -120,6 +120,7 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 			//
 			if(listNode[i].leftY.length > 1) {
 				var tempNode = new Node();
+				//
 				tempNode.parent = listNode[i];
 				tempNode.indexSortT = tempNode.parent.indexSortT + 1;
 				tempNode.indexTable = tNode[tempNode.indexSortT].indexTable;
@@ -128,6 +129,7 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 				tempNode.allY = tempNode.parent.leftY;
 				tempNode.deltaCoat = tNode[tempNode.indexSortT].deltaCoat + 
 													tempNode.parent.deltaCoat;
+				//
 				listNode[listNode.length] = tempNode;
 			} else {
 				coatYListText[coatYListText.length]  = ("Y" + (listNode[i].leftY[0] + 1) + " | ") + 
@@ -138,6 +140,7 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 			//
 			if(listNode[i].rightY.length > 1) {
 				var tempNode = new Node();
+				//
 				tempNode.parent = listNode[i];
 				tempNode.indexSortT = tempNode.parent.indexSortT + 1;
 				tempNode.indexTable = tNode[tempNode.indexSortT].indexTable;
@@ -146,6 +149,7 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 				tempNode.allY = tempNode.parent.rightY;
 				tempNode.deltaCoat = tNode[tempNode.indexSortT].deltaCoat + 
 													tempNode.parent.deltaCoat;
+				//
 				listNode[listNode.length] = tempNode;
 			} else {
 				coatYListText[coatYListText.length]  = ("Y" + (listNode[i].rightY[0] + 1) + " | ") + 
@@ -166,6 +170,6 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 		console.log(coatYListText);
 		console.log(coatY);
 		console.log(CalculateCoatTree());
-		console.log("\n\n\n\n")
+		console.log("\n\n\n\n\n\n\n\n\n\n")
 	} CreateTree();
 }
