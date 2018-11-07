@@ -6,12 +6,12 @@ var costTList1 = [4, 6, 8, 3];
 var probabilityYList1 = [0.083, 0.096, 0.12, 0.09, 0.076, 0.07, 0.1, 0.05, 0.07, 0.093, 0.075, 0.077];
 //
 var inputMatrix2 = [[0, 0, 1, 1, 0, 0], 
-				[0, 1, 0, 1, 0, 1], 
-				[0, 0, 0, 0, 1, 1]];
+					[0, 1, 0, 1, 0, 1], 
+					[0, 0, 0, 0, 1, 1]];
 var costTList2 = [5, 4, 9];
 var probabilityYList2 = [0.1, 0.1, 0.025, 0.025, 0.5, 0.2];
 //
-BranchBoundMethod(inputMatrix2, costTList2, probabilityYList2);
+//BranchBoundMethod(inputMatrix2, costTList2, probabilityYList2);
 BranchBoundMethod(inputMatrix1, costTList1, probabilityYList1);
 //
 //
@@ -82,6 +82,7 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 		this.deltaCoat = coatT;
 		this.name = null;
 		//
+		this.path = "";
 		this.parent = null;
 		this.allY = null;
 		this.leftChild = null;
@@ -97,6 +98,7 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 		root.indexTable = tNode[0].indexTable;
 		root.indexSortT = 0;
 		root.name = "T" + (root.indexTable + 1);
+		root.path = root.name;
 		//
 		var listNode = [root];
 		for(var i = 0; i < listNode.length; i++) {
@@ -129,11 +131,16 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 				tempNode.allY = tempNode.parent.leftY;
 				tempNode.deltaCoat = tNode[tempNode.indexSortT].deltaCoat + 
 													tempNode.parent.deltaCoat;
+				if(i == 0) {
+					tempNode.path += " " + root.path + "|( 0 )" + " -> " + tempNode.name + "|( 0 )";
+				} else {
+					tempNode.path += " " + tempNode.parent.path + " -> " + tempNode.name + "|( 0 )";
+				}
 				//
 				listNode[listNode.length] = tempNode;
-			} else {
+			} else if(listNode[i].leftY.length == 1) {
 				coatYListText[coatYListText.length]  = ("Y" + (listNode[i].leftY[0] + 1) + " | ") + 
-							probabilityYList[listNode[i].leftY[0]] * listNode[i].deltaCoat;
+							probabilityYList[listNode[i].leftY[0]] * listNode[i].deltaCoat + "    Path |  " + listNode[i].path;
 				coatY[coatY.length]  = 
 						probabilityYList[listNode[i].leftY[0]] * listNode[i].deltaCoat;
 			}
@@ -149,11 +156,16 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 				tempNode.allY = tempNode.parent.rightY;
 				tempNode.deltaCoat = tNode[tempNode.indexSortT].deltaCoat + 
 													tempNode.parent.deltaCoat;
+				if(i == 0) {
+					tempNode.path += " " + root.path + "|( 1 )" + " -> " + tempNode.name + "|( 1 )";
+				} else {
+					tempNode.path += " " + tempNode.parent.path + " -> " + tempNode.name + "|( 1 )";
+				}
 				//
 				listNode[listNode.length] = tempNode;
-			} else {
+			} else if(listNode[i].rightY.length == 1) {
 				coatYListText[coatYListText.length]  = ("Y" + (listNode[i].rightY[0] + 1) + " | ") + 
-							probabilityYList[listNode[i].rightY[0]] * listNode[i].deltaCoat;
+							probabilityYList[listNode[i].rightY[0]] * listNode[i].deltaCoat + "    Path |  " + listNode[i].path;
 				coatY[coatY.length]  = 
 						probabilityYList[listNode[i].rightY[0]] * listNode[i].deltaCoat;
 			}
@@ -169,7 +181,7 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 		//
 		console.log(root);
 		console.log(coatYListText);
-		console.log(coatY);
+		//console.log(coatY);
 		console.log(CalculateCoatTree());
 		console.log("\n\n\n\n\n\n\n\n\n\n")
 	} CreateTree();
