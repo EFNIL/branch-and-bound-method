@@ -162,7 +162,8 @@ function BranchBoundMethod(inputMatrix, costTList, probabilityYList) {
 		function CalculateCoatTree() {
 			var result = 0;
 			for(var i = 0; i < coatY.length; i++)
-				result += coatY[i];
+				if(!isNaN(coatY[i]))
+					result += coatY[i];
 			return result;
 		}
 		//
